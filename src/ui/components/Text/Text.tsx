@@ -21,5 +21,6 @@ export const Text = ({children}: Props) => {
 
 const Wrapper = styled.span<{theme: IThemes}>`
   display: inline-block;
+  font-size: 18px;
   color: ${theme => theme.theme.text}
 `

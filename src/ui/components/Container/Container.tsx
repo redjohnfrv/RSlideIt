@@ -19,6 +19,7 @@ export const Container = ({children}: Props) => {
 
 const Wrapper = styled.div<{background: any}>`
   max-width: 1900px;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 24px;
   background: ${background => background.background.theme.background};
