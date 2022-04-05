@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {createContext, useState} from 'react'
+import {themes} from './assets/themes'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//** components
+import {MainLayout} from './ui/MainLayout'
+import {Home} from './app/Home'
+
+interface IThemeValues {
+  background: string
+  buttons: string
+  buttonsText: string
+  text: string
 }
 
-export default App;
+export interface IThemes {
+  theme: IThemeValues
+  themeHandler: () => void
+}
+
+interface ITitle {
+  title: string
+  titleHandler: (title: string) => void
+}
+
+export const ThemeContext =
+  createContext<IThemes>({theme: themes.light, themeHandler: () => null})
+
+export const TitleContext =
+  createContext<ITitle>({title: 'R SLIDE IT', titleHandler: () => ''})
+
+function App() {
+
+  const {Provider: ThemeProvider} = ThemeContext
+  const {Provider: TitleProvider} = TitleContext
+  const [themeIsLight, setTheme] = useState(true)
+  const [titlePage, setTitle] = useState('R SLIDE IT')
+
+  const titleHandler = (title: string) => {
+    setTitle(title)
+  }
+
+  const themeHandler = () => {
+    themeIsLight
+      ? setTheme(false)
+      : setTheme(true)
+
+  }
+
+  return (
+    <ThemeProvider value={{theme: themeIsLight ? themes.light : themes.dark, themeHandler}}>
+      <TitleProvider value={{title: titlePage, titleHandler}}>
+        <MainLayout title={titlePage}>
+          <Home />
+        </MainLayout>
+      </TitleProvider>
+    </ThemeProvider>
+  )
+}
+
+export default App
