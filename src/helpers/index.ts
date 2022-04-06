@@ -1,0 +1,1 @@
+export {fileReaderResolver} from './fileReaderResolver'

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 //** utils
 import {TitleContext} from '../../App'
 import {pageTitles} from '../../assets/constants'
+import {fileReaderResolver} from '../../helpers'
 
 //** components
 import {Text} from '../../ui/components/Text'
@@ -17,26 +18,34 @@ export const Home = () => {
     titleContext.titleHandler(pageTitle)
   }, [titleContext, pageTitle])
 
-  const [dataUrl, setDataUrl] = useState<string>()
+  const [dataUrls, setDataUrls] = useState<string[]>([])
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const loadedFiles = e.target.files![0]
-    const fileReader = new FileReader()
+    const loadedFiles = e.target.files
 
-    fileReader.onloadend = () => {
-      setDataUrl(fileReader.result as string)
+    if (loadedFiles) {
+      let fileList = []
+
+      for (let i = 0; i < loadedFiles.length; i++) {
+        fileList.push(fileReaderResolver(loadedFiles[i]))
+      }
+
+      Promise.all(fileList)
+        .then((files) => {
+          setDataUrls(files)
+        })
     }
-
-    fileReader.readAsDataURL(loadedFiles)
   }
-
-
 
   return (
     <Wrapper>
       <Text>content</Text><br /><br /><br />
-      <input type="file" onChange={(e) => handleImageChange(e)} />
-      <img src={dataUrl} alt={dataUrl} />
+      <input type="file" multiple onChange={(e) => handleImageChange(e)} />
+
+      {dataUrls.length > 0 && dataUrls.map((item: string) => {
+        return <img key={item} src={item} alt={item} />
+      })}
+
     </Wrapper>
   )
 }
