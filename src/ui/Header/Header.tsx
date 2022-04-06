@@ -5,8 +5,9 @@ import styled from 'styled-components'
 import {Title} from '../components/Title'
 
 //** utils
-import {IThemes, ThemeContext} from '../../App'
+import {ThemeContext} from '../../App'
 import {themeNames} from '../../assets/constants'
+import {IThemes} from '../../assets/interfaces'
 
 interface Props {
   title: string
@@ -52,9 +53,13 @@ const ThemeHandler = styled.button<{theme: IThemes}>`
   width: 68px;
   height: 32px;
   font-size: 16px;
+  background: ${theme => theme.theme.buttons};
+  color: ${theme => theme.theme.buttonsText};
   border: none;
   border-radius: 4px;
+  opacity: .9;
   
-  background: ${theme => theme.theme.buttons};
-  color: ${theme => theme.theme.buttonsText}
+  &:hover {
+    opacity: 1;
+  }
 `

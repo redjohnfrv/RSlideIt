@@ -2,7 +2,8 @@ import React, {ChangeEvent, useContext} from 'react'
 import styled from 'styled-components'
 
 //** utils
-import {IThemes, ThemeContext} from '../../../App'
+import {ThemeContext} from '../../../App'
+import {IThemes} from '../../../assets/interfaces'
 
 interface Props {
   handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -35,6 +36,7 @@ const Wrapper = styled.div<{theme: IThemes}>`
   & input[type='file'] {
     color: transparent;
     opacity: 0;
+    pointer-events: none;
   }
   
   & label {
@@ -48,5 +50,11 @@ const Wrapper = styled.div<{theme: IThemes}>`
     color: ${theme => theme.theme.buttonsText};
     background: ${theme => theme.theme.buttons};
     border-radius: 4px;
+    cursor: pointer;
+    opacity: .9;
+    
+    &:hover {
+      opacity: 1;
+    }
   }
 `

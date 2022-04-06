@@ -2,7 +2,8 @@ import React, {useContext} from 'react'
 import styled from 'styled-components'
 
 //** utils
-import {IThemes, ThemeContext} from '../../../App'
+import {ThemeContext} from '../../../App'
+import {IThemes} from '../../../assets/interfaces'
 
 interface Props {
   title: string

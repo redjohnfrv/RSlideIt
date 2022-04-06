@@ -15,3 +15,8 @@ export const themeNames = {
   DARK: 'DARK',
   LIGHT: 'LIGHT',
 }
+
+export const routes = {
+  ROOT: '/',
+  WATCHER: '/watch',
+}

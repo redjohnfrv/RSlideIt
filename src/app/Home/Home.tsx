@@ -9,6 +9,7 @@ import {fileReaderResolver} from '../../helpers'
 //** components
 import {Text} from '../../ui/components/Text'
 import {UploadInput} from '../../ui/components/Inputs'
+import {Preloader} from '../../ui/Preloader'
 
 export const Home = () => {
 
@@ -49,9 +50,7 @@ export const Home = () => {
 
       <UploadInput handleImageChange={handleImageChange} />
 
-      {dataUrls.length > 0 && dataUrls.map((item: string) => {
-        return <img key={item} src={item} alt={item} />
-      })}
+      <Preloader images={dataUrls} />
     </Wrapper>
   )
 }
