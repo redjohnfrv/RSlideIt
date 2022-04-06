@@ -91,7 +91,7 @@ const NoImages = styled.div`
     text-align: center;
     border-radius: 50%;
     font-size: 56px;
-    background: ${colors.white};
+    background: white;
     color: ${colors.black};
   }
 `

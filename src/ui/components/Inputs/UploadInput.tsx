@@ -5,6 +5,11 @@ import styled from 'styled-components'
 import {ThemeContext} from '../../../App'
 import {IThemes} from '../../../assets/interfaces'
 
+//** components
+import {Broom} from '../../icons/Broom'
+import {useAppDispatch} from '../../../hooks/useAppDispatch'
+import {clearImages} from '../../../redux/pictures/slice'
+
 interface Props {
   handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
@@ -12,6 +17,11 @@ interface Props {
 export const UploadInput = ({handleImageChange}: Props) => {
 
   const theme = useContext(ThemeContext)
+  const dispatch = useAppDispatch()
+
+  const clearPreview = () => {
+    dispatch(clearImages())
+  }
 
   return (
     <Wrapper theme={theme.theme}>
@@ -24,6 +34,9 @@ export const UploadInput = ({handleImageChange}: Props) => {
         accept="image/*"
         onChange={(e) => handleImageChange(e)}
       />
+      <ClearPreview theme={theme.theme} onClick={clearPreview}>
+        <Broom />
+      </ClearPreview>
     </Wrapper>
   )
 }
@@ -52,6 +65,24 @@ const Wrapper = styled.div<{theme: IThemes}>`
     border-radius: 4px;
     cursor: pointer;
     opacity: .9;
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+`
+const ClearPreview = styled.div<{theme: IThemes}>`
+  position: absolute;
+  top: -7px;
+  right: -55px;
+  width: 45px;
+  height: 45px;
+  
+  cursor: pointer;
+  
+  & svg {
+    fill: ${theme => theme.theme.buttons};
+    opacity: .8;
     
     &:hover {
       opacity: 1;

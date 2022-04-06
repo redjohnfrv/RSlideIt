@@ -1,26 +1,31 @@
-import React, {ChangeEvent, useContext, useEffect, useState} from 'react'
+import React, {ChangeEvent, useContext, useEffect} from 'react'
 import styled from 'styled-components'
+import {useSelector} from 'react-redux'
 
 //** utils
 import {TitleContext} from '../../App'
 import {pageTitles} from '../../assets/constants'
 import {fileReaderResolver} from '../../helpers'
+import {useAppDispatch} from '../../hooks/useAppDispatch'
 
 //** components
 import {Text} from '../../ui/components/Text'
 import {UploadInput} from '../../ui/components/Inputs'
 import {Preloader} from '../../ui/Preloader'
+import {setImages} from '../../redux/pictures/slice'
+import {selectPictures} from '../../redux/pictures/selector'
 
 export const Home = () => {
 
   const pageTitle = pageTitles.home
   const titleContext = useContext(TitleContext)
 
+  const dispatch = useAppDispatch()
+  const pictures = useSelector(selectPictures)
+
   useEffect(() => {
     titleContext.titleHandler(pageTitle)
   }, [titleContext, pageTitle])
-
-  const [dataUrls, setDataUrls] = useState<string[]>([])
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const loadedFiles = e.target.files
@@ -34,7 +39,7 @@ export const Home = () => {
 
       Promise.all(fileList)
         .then((files) => {
-          setDataUrls(files)
+          dispatch(setImages(files))
         })
     }
   }
@@ -50,7 +55,7 @@ export const Home = () => {
 
       <UploadInput handleImageChange={handleImageChange} />
 
-      <Preloader images={dataUrls} />
+      <Preloader images={pictures} />
     </Wrapper>
   )
 }
