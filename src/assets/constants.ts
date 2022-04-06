@@ -1,5 +1,6 @@
 export const colors = {
   gray: '#333',
+  lightGray: '#c7bdbd',
   white: '#e1dede',
   black: '#151a1a',
   green: '#002c13',
@@ -7,7 +8,7 @@ export const colors = {
 }
 
 export const pageTitles = {
-  home: 'MAIN PAGE',
+  home: 'WATCH ME!',
 }
 
 export const themeNames = {

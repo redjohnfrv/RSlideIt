@@ -8,6 +8,7 @@ import {fileReaderResolver} from '../../helpers'
 
 //** components
 import {Text} from '../../ui/components/Text'
+import {UploadInput} from '../../ui/components/Inputs'
 
 export const Home = () => {
 
@@ -39,15 +40,27 @@ export const Home = () => {
 
   return (
     <Wrapper>
-      <Text>content</Text><br /><br /><br />
-      <input type="file" multiple onChange={(e) => handleImageChange(e)} />
+      <Description>
+        <Text>
+          If you want to start viewing your favorite images, you need to download them and choose the
+          viewing mode that suits you. Also you can choose dark or light theme for viewing. Enjoy!
+        </Text>
+      </Description>
+
+      <UploadInput handleImageChange={handleImageChange} />
 
       {dataUrls.length > 0 && dataUrls.map((item: string) => {
         return <img key={item} src={item} alt={item} />
       })}
-
     </Wrapper>
   )
 }
 
 const Wrapper = styled.section``
+
+const Description = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 0 96px 24px 0;
+  border-radius: 12px;
+`
