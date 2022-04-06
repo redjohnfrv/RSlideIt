@@ -2,11 +2,11 @@ import {colors} from '../constants'
 
 export const themes = {
   light: {
-    background: colors.white,
+    background: 'white',
     buttons: colors.green,
     buttonsText: colors.white,
     text: colors.black,
-    blockBg: colors.lightGray,
+    blockBg: colors.white,
   },
   dark: {
     background: colors.gray,
