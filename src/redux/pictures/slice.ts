@@ -1,14 +1,21 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-const initialState: string[] = []
+export interface IPicture {
+  id: string
+  pic: string
+}
+
+const initialState: IPicture[] = []
 
 const picturesSlice = createSlice({
   name: 'pictures',
   initialState,
   reducers: {
     setImages: (state, action) => {
-      const newState: string[] = []
-      action.payload.map((item: string) => newState.push(item))
+      const newState: IPicture[] = []
+      action.payload.forEach((item: string) => {
+        newState.push({id: item.slice(30, 100), pic: item})
+      })
       return newState
     },
     clearImages: () => {

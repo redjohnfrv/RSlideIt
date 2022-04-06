@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import styled from 'styled-components'
 
 //** components
@@ -8,26 +8,42 @@ import {Text} from '../components/Text'
 import {colors} from '../../assets/constants'
 import {ThemeContext} from '../../App'
 import {IThemes} from '../../assets/interfaces'
+import {IPicture} from '../../redux/pictures/slice'
+import {Popup} from '../Popup'
 
 
 interface Props {
-  images: string[]
+  images: IPicture[]
 }
 
 export const Preloader = ({images}: Props) => {
 
   const theme = useContext(ThemeContext)
 
+  const [chosenPic, setChosenPic] = useState<IPicture | undefined>(undefined)
+
+  const clickImageHandler = (image: IPicture | undefined) => {
+    console.log('adfgdf: ', image)
+    if (image) {
+      setChosenPic(image)
+      document.body.style.overflow = 'hidden'
+    } else {
+      setChosenPic(undefined)
+      document.body.style.overflow = 'auto'
+    }
+  }
+
   if (images.length > 0) {
     return (
       <Wrapper theme={theme.theme}>
-        {images.map((image: string) => {
+        {images.map((image: IPicture) => {
           return (
-            <ImagePreview key={image}>
-              <img src={image} alt={image} />
+            <ImagePreview key={image.id} onClick={() => clickImageHandler(image)}>
+              <img src={image.pic} alt={image.pic} />
             </ImagePreview>
           )
         })}
+        <Popup image={chosenPic} onClick={clickImageHandler} />
       </Wrapper>
     )
   } else {
