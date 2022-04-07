@@ -1,13 +1,13 @@
 import React, {useContext, useState} from 'react'
 import styled from 'styled-components'
 
-//** components
-import {Title} from '../components/Title'
-
 //** utils
 import {ThemeContext} from '../../App'
 import {themeNames} from '../../assets/constants'
 import {IThemes} from '../../assets/interfaces'
+
+//** components
+import {Title} from '../components/Title'
 
 interface Props {
   title: string

@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
+import {v4 as uuid} from 'uuid'
 
 export interface IPicture {
   id: string
@@ -14,7 +15,7 @@ const picturesSlice = createSlice({
     setImages: (state, action) => {
       const newState: IPicture[] = []
       action.payload.forEach((item: string) => {
-        newState.push({id: item.slice(30, 100), pic: item})
+        newState.push({id: uuid(), pic: item})
       })
       return newState
     },

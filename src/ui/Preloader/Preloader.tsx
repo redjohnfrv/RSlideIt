@@ -1,29 +1,30 @@
 import React, {useContext, useState} from 'react'
 import styled from 'styled-components'
 
-//** components
-import {Text} from '../components/Text'
-
 //** utils
 import {colors} from '../../assets/constants'
 import {ThemeContext} from '../../App'
 import {IThemes} from '../../assets/interfaces'
 import {IPicture} from '../../redux/pictures/slice'
+
+//** components
+import {Text} from '../components/Text'
 import {Popup} from '../Popup'
+import {Loader} from '../Loader'
 
 
 interface Props {
   images: IPicture[]
+  loading: boolean
 }
 
-export const Preloader = ({images}: Props) => {
+export const Preloader = ({images, loading}: Props) => {
 
   const theme = useContext(ThemeContext)
 
   const [chosenPic, setChosenPic] = useState<IPicture | undefined>(undefined)
 
   const clickImageHandler = (image: IPicture | undefined) => {
-    console.log('adfgdf: ', image)
     if (image) {
       setChosenPic(image)
       document.body.style.overflow = 'hidden'
@@ -32,6 +33,8 @@ export const Preloader = ({images}: Props) => {
       document.body.style.overflow = 'auto'
     }
   }
+
+  if (loading) return <LoaderWrapper><Loader /></LoaderWrapper>
 
   if (images.length > 0) {
     return (
@@ -110,4 +113,11 @@ const NoImages = styled.div`
     background: white;
     color: ${colors.black};
   }
+`
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50vh;
 `

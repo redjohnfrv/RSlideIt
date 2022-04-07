@@ -4,17 +4,17 @@ import styled from 'styled-components'
 //** utils
 import {ThemeContext} from '../../../App'
 import {IThemes} from '../../../assets/interfaces'
-
-//** components
-import {Broom} from '../../icons/Broom'
 import {useAppDispatch} from '../../../hooks/useAppDispatch'
 import {clearImages} from '../../../redux/pictures/slice'
 
+//** components
+import {SvgBroom} from '../../icons'
+
 interface Props {
-  handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void
+  uploadImageHandler: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const UploadInput = ({handleImageChange}: Props) => {
+export const UploadInput = ({uploadImageHandler}: Props) => {
 
   const theme = useContext(ThemeContext)
   const dispatch = useAppDispatch()
@@ -32,10 +32,10 @@ export const UploadInput = ({handleImageChange}: Props) => {
         title="Upload your images"
         multiple
         accept="image/*"
-        onChange={(e) => handleImageChange(e)}
+        onChange={(e) => uploadImageHandler(e)}
       />
       <ClearPreview theme={theme.theme} onClick={clearPreview}>
-        <Broom />
+        <SvgBroom />
       </ClearPreview>
     </Wrapper>
   )

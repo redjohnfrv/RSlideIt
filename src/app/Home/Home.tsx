@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useContext, useEffect} from 'react'
+import React, {ChangeEvent, useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {useSelector} from 'react-redux'
 
@@ -7,13 +7,13 @@ import {TitleContext} from '../../App'
 import {pageTitles} from '../../assets/constants'
 import {fileReaderResolver} from '../../helpers'
 import {useAppDispatch} from '../../hooks/useAppDispatch'
+import {setImages} from '../../redux/pictures/slice'
+import {selectPictures} from '../../redux/pictures/selector'
 
 //** components
 import {Text} from '../../ui/components/Text'
 import {UploadInput} from '../../ui/components/Inputs'
 import {Preloader} from '../../ui/Preloader'
-import {setImages} from '../../redux/pictures/slice'
-import {selectPictures} from '../../redux/pictures/selector'
 
 export const Home = () => {
 
@@ -23,11 +23,15 @@ export const Home = () => {
   const dispatch = useAppDispatch()
   const pictures = useSelector(selectPictures)
 
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   useEffect(() => {
     titleContext.titleHandler(pageTitle)
   }, [titleContext, pageTitle])
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsLoading(true)
+
     const loadedFiles = e.target.files
 
     if (loadedFiles) {
@@ -40,6 +44,7 @@ export const Home = () => {
       Promise.all(fileList)
         .then((files) => {
           dispatch(setImages(files))
+          setIsLoading(false)
         })
     }
   }
@@ -53,9 +58,9 @@ export const Home = () => {
         </Text>
       </Description>
 
-      <UploadInput handleImageChange={handleImageChange} />
+      <UploadInput uploadImageHandler={uploadImageHandler} />
 
-      <Preloader images={pictures} />
+      <Preloader images={pictures} loading={isLoading} />
     </Wrapper>
   )
 }
