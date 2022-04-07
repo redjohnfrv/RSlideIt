@@ -17,9 +17,11 @@ const picturesSlice = createSlice({
       action.payload.forEach((item: string) => {
         newState.push({id: uuid(), pic: item})
       })
+
       return newState
     },
     clearImages: () => {
+
       return []
     }
   }

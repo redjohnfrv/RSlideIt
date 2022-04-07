@@ -39,8 +39,6 @@ export const Header = ({title}: Props) => {
   )
 }
 
-
-
 const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;

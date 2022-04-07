@@ -34,7 +34,11 @@ export const Preloader = ({images, loading}: Props) => {
     }
   }
 
-  if (loading) return <LoaderWrapper><Loader /></LoaderWrapper>
+  if (loading) return (
+    <LoaderWrapper>
+      <Loader />
+    </LoaderWrapper>
+  )
 
   if (images.length > 0) {
     return (
