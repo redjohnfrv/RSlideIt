@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 //** utils
 import {ThemeContext} from '../../../App'
+import {IThemes} from '../../../assets/interfaces'
 
 interface Props {
   children: ReactNode
@@ -13,16 +14,16 @@ export const Container = ({children}: Props) => {
   const theme = useContext(ThemeContext)
 
   return (
-    <Wrapper background={theme}>
+    <Wrapper theme={theme.theme}>
       {children}
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<{background: any}>`
+const Wrapper = styled.div<{theme: IThemes}>`
   max-width: 1900px;
   min-height: 100vh;
   margin: 0 auto;
   padding: 24px;
-  background: ${background => background.background.theme.background};
+  background: ${theme => theme.theme.background};
 `

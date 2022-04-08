@@ -4,24 +4,18 @@ import styled from 'styled-components'
 //** utils
 import {ThemeContext} from '../../../App'
 import {IThemes} from '../../../assets/interfaces'
-import {useAppDispatch} from '../../../hooks/useAppDispatch'
-import {clearImages} from '../../../redux/pictures/slice'
 
 //** components
 import {SvgBroom} from '../../icons'
 
 interface Props {
   uploadImageHandler: (e: ChangeEvent<HTMLInputElement>) => void
+  clearPreview: () => void
 }
 
-export const UploadInput = ({uploadImageHandler}: Props) => {
+export const UploadInput = ({uploadImageHandler, clearPreview}: Props) => {
 
   const theme = useContext(ThemeContext)
-  const dispatch = useAppDispatch()
-
-  const clearPreview = () => {
-    dispatch(clearImages())
-  }
 
   return (
     <Wrapper theme={theme.theme}>

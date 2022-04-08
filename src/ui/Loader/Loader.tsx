@@ -1,8 +1,12 @@
 import React, {useContext} from 'react'
 import styled, {keyframes} from 'styled-components'
-import {SvgLoader} from '../icons'
+
+//** utils
 import {ThemeContext} from '../../App'
 import {IThemes} from '../../assets/interfaces'
+
+//** components
+import {SvgLoader} from '../icons'
 
 export const Loader = () => {
 

@@ -25,6 +25,7 @@
     "sass": "^1.49.11",
     "styled-components": "^5.3.5",
     "typescript": "^4.6.3",
+    "use-indexeddb": "^1.0.9",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },

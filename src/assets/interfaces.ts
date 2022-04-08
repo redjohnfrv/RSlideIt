@@ -14,3 +14,8 @@ export interface IThemes {
   theme: IThemeValues
   themeHandler: () => void
 }
+
+export interface IPicture {
+  id: string
+  pic: string
+}

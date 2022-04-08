@@ -1,14 +1,14 @@
-import React, {ChangeEvent, useContext, useEffect, useState} from 'react'
+import React, {ChangeEvent, useCallback, useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {useSelector} from 'react-redux'
 
 //** utils
 import {TitleContext} from '../../App'
 import {pageTitles} from '../../assets/constants'
 import {fileReaderResolver} from '../../helpers'
-import {useAppDispatch} from '../../hooks/useAppDispatch'
-import {setImages} from '../../redux/pictures/slice'
-import {selectPictures} from '../../redux/pictures/selector'
+import {useIndexedDBStore} from 'use-indexeddb'
+import {v4 as uuid} from 'uuid'
+import {IPicture} from '../../assets/interfaces'
+import {DBName} from '../../indexedDB/config'
 
 //** components
 import {Text} from '../../ui/components/Text'
@@ -20,10 +20,21 @@ export const Home = () => {
   const pageTitle = pageTitles.home
   const titleContext = useContext(TitleContext)
 
-  const dispatch = useAppDispatch()
-  const pictures = useSelector(selectPictures)
-
+  const [pics, setPics] = useState<IPicture[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const {add, getAll, deleteAll} = useIndexedDBStore(DBName)
+  const pictures: IPicture[] = []
+
+  /** get pictures from indexedDB **/
+  const gettingPics = useCallback(() => {
+    getAll()
+      .then(res => res.forEach((item) => {
+        pictures.push(item as IPicture)
+        setPics(pictures)
+      }))
+      .then(() => setIsLoading(false))
+  }, [getAll])
 
   useEffect(() => {
     titleContext.titleHandler(pageTitle)
@@ -31,7 +42,6 @@ export const Home = () => {
 
   const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true)
-
     const loadedFiles = e.target.files
 
     if (loadedFiles) {
@@ -43,11 +53,28 @@ export const Home = () => {
 
       Promise.all(fileList)
         .then((files) => {
-          dispatch(setImages(files))
-          setIsLoading(false)
+          files.forEach((item: string) => {
+            /** add pictures to indexedDB **/
+            add({id: uuid(), pic: item})
+              .then(() => console.log('adding success!'))
+              .catch(() => console.log('adding error ...'))
+          })
         })
+        .then(() => gettingPics())
     }
   }
+
+  const clearPreview = () => {
+    setIsLoading(true)
+    deleteAll()
+      .then(() => setPics([]))
+      .then(() => setIsLoading(false))
+  }
+
+  /** clear indexedDB on first load **/
+  useEffect(() => {
+    clearPreview()
+  }, [])
 
   return (
     <Wrapper>
@@ -58,9 +85,12 @@ export const Home = () => {
         </Text>
       </Description>
 
-      <UploadInput uploadImageHandler={uploadImageHandler} />
+      <UploadInput
+        uploadImageHandler={uploadImageHandler}
+        clearPreview={clearPreview}
+      />
 
-      <Preloader images={pictures} loading={isLoading} />
+      <Preloader images={pics} loading={isLoading} />
     </Wrapper>
   )
 }

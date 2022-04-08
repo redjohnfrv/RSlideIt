@@ -2,15 +2,13 @@ import React, {useContext, useState} from 'react'
 import styled from 'styled-components'
 
 //** utils
-import {colors} from '../../assets/constants'
 import {ThemeContext} from '../../App'
-import {IThemes} from '../../assets/interfaces'
-import {IPicture} from '../../redux/pictures/slice'
+import {IPicture, IThemes} from '../../assets/interfaces'
 
 //** components
-import {Text} from '../components/Text'
 import {Popup} from '../Popup'
 import {Loader} from '../Loader'
+import {NoImages} from './NoImages'
 
 
 interface Props {
@@ -24,6 +22,7 @@ export const Preloader = ({images, loading}: Props) => {
 
   const [chosenPic, setChosenPic] = useState<IPicture | undefined>(undefined)
 
+  /** switch body scrolling **/
   const clickImageHandler = (image: IPicture | undefined) => {
     if (image) {
       setChosenPic(image)
@@ -39,8 +38,7 @@ export const Preloader = ({images, loading}: Props) => {
       <Loader />
     </LoaderWrapper>
   )
-
-  if (images.length > 0) {
+  if (!!images.length) {
     return (
       <Wrapper theme={theme.theme}>
         {images.map((image: IPicture) => {
@@ -54,14 +52,7 @@ export const Preloader = ({images, loading}: Props) => {
       </Wrapper>
     )
   } else {
-    return (
-      <WrapperNoImages theme={theme.theme}>
-        <NoImages>
-          <Text>×</Text>
-          <Text>NO IMAGES</Text>
-        </NoImages>
-      </WrapperNoImages>
-    )
+    return <NoImages />
   }
 }
 
@@ -89,35 +80,6 @@ const ImagePreview = styled.div`
   }
 `
 
-const WrapperNoImages = styled.div`
-  display: flex;
-  width: 100%;
-  min-height: 50vh;
-  padding: 24px;
-  margin-top: 24px;
-  background: ${theme => theme.theme.blockBg};
-  border-radius: 4px;
-`
-
-const NoImages = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-  
-  & span:first-child {
-    width: 96px;
-    height: 96px;
-    line-height: 96px;
-    text-align: center;
-    border-radius: 50%;
-    font-size: 56px;
-    background: white;
-    color: ${colors.black};
-  }
-`
 const LoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
