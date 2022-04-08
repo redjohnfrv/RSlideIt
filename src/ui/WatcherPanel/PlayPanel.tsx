@@ -7,16 +7,20 @@ import {ThemeContext} from '../../App'
 //** components
 import {SvgFaster, SvgPause, SvgPlay, SvgRefresh} from '../icons'
 
-export const PlayPanel = () => {
+interface Props {
+  playHandler: () => void
+}
+
+export const PlayPanel = ({playHandler}: Props) => {
 
   const theme = useContext(ThemeContext)
 
   return (
     <Wrapper theme={theme.theme}>
-      <SvgWrapper>
+      <SvgWrapper onClick={playHandler}>
         <SvgPlay />
       </SvgWrapper>
-      <SvgWrapper>
+      <SvgWrapper onClick={playHandler}>
         <SvgPause />
       </SvgWrapper>
       <SvgWrapper>
@@ -30,6 +34,9 @@ export const PlayPanel = () => {
 }
 
 const Wrapper = styled.nav`
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
   display: flex;
   align-items: center;
   gap: 24px;
@@ -37,6 +44,12 @@ const Wrapper = styled.nav`
   padding: 12px;
   background: ${theme => theme.theme.buttons};
   border-radius: 4px;
+  opacity: .1;
+  z-index: 10;
+  
+  &:hover {
+    opacity: 1;
+  }
   
   & svg {
     width: 100%;

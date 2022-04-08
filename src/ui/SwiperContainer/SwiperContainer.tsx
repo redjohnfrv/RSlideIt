@@ -37,7 +37,7 @@ export const SwiperContainer = ({pics}: Props) => {
 
   return (
     <Wrapper theme={theme.theme}>
-      <PlayPanel />
+      <PlayPanel playHandler={playHandler} />
       <SwiperComponent
         //@ts-ignore
         ref={playRef}
@@ -69,6 +69,7 @@ const Wrapper = styled.div<{theme: IThemes}>`
   flex-direction: column;
   gap: 48px;
   height: 100vh;
+  margin-bottom: 48px;
   
   & .swiper-slide {
     background: ${theme => theme.theme.background} !important;

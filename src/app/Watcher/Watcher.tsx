@@ -18,7 +18,6 @@ export const Watcher = () => {
 
   const {getAll} = useIndexedDBStore(DBName)
   const [pics, setPics] = useState<IPicture[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const pictures: IPicture[] = []
 
@@ -29,7 +28,6 @@ export const Watcher = () => {
         pictures.push(item as IPicture)
         setPics(pictures)
       }))
-      // .then(() => setIsLoading(false))
   }, [getAll])
 
   /** get pics from indexedDB on render **/
@@ -49,6 +47,4 @@ export const Watcher = () => {
   )
 }
 
-const Wrapper = styled.section`
-  
-`
+const Wrapper = styled.section``
