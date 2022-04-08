@@ -1,14 +1,14 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
-import {selectPictures} from '../../redux/pictures/selector'
+import styled from 'styled-components'
 
 export const Watcher = () => {
-
-  const pictures = useSelector(selectPictures)
-
-  console.log('pics: ', pictures)
-
   return (
-    <div>WATCHER</div>
+    <Wrapper>
+      wrapper
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div`
+  
+`

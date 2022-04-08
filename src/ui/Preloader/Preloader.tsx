@@ -53,12 +53,14 @@ export const Preloader = ({images, loading, deletePicById}: Props) => {
           return (
             <ImagePreview key={image.id} onClick={() => clickImageHandler(image)}>
               <img src={image.pic} alt={image.pic} />
+
               <DeleteImage
                 onClick={(event) => deleteHandler(event, image.id)}
                 theme={theme.theme}
               >
                 <SvgClose />
               </DeleteImage>
+
             </ImagePreview>
           )
         })}

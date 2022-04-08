@@ -5,15 +5,11 @@ import styled from 'styled-components'
 import {ThemeContext} from '../../../App'
 import {IThemes} from '../../../assets/interfaces'
 
-//** components
-import {SvgBroom} from '../../icons'
-
 interface Props {
   uploadImageHandler: (e: ChangeEvent<HTMLInputElement>) => void
-  clearPreview: () => void
 }
 
-export const UploadInput = ({uploadImageHandler, clearPreview}: Props) => {
+export const UploadInput = ({uploadImageHandler}: Props) => {
 
   const theme = useContext(ThemeContext)
 
@@ -28,9 +24,6 @@ export const UploadInput = ({uploadImageHandler, clearPreview}: Props) => {
         accept="image/*"
         onChange={(e) => uploadImageHandler(e)}
       />
-      <ClearPreview theme={theme.theme} onClick={clearPreview}>
-        <SvgBroom />
-      </ClearPreview>
     </Wrapper>
   )
 }
@@ -59,24 +52,6 @@ const Wrapper = styled.div<{theme: IThemes}>`
     border-radius: 4px;
     cursor: pointer;
     opacity: .9;
-    
-    &:hover {
-      opacity: 1;
-    }
-  }
-`
-const ClearPreview = styled.div<{theme: IThemes}>`
-  position: absolute;
-  top: -7px;
-  right: -55px;
-  width: 45px;
-  height: 45px;
-  
-  cursor: pointer;
-  
-  & svg {
-    fill: ${theme => theme.theme.buttons};
-    opacity: .8;
     
     &:hover {
       opacity: 1;

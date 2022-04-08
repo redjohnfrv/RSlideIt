@@ -12,8 +12,8 @@ import {DBName} from '../../indexedDB/config'
 
 //** components
 import {Text} from '../../ui/components/Text'
-import {UploadInput} from '../../ui/components/Inputs'
 import {Preloader} from '../../ui/Preloader'
+import {NavigationMenu} from '../../ui/NavigationMenu'
 
 export const Home = () => {
 
@@ -56,8 +56,8 @@ export const Home = () => {
           files.forEach((item: string) => {
             /** add pictures to indexedDB **/
             add({id: uuid(), pic: item})
-              .then(() => console.log('adding success!'))
-              .catch(() => console.log('adding error ...'))
+              .then(() => console.log('add indexedDB success!'))
+              .catch(() => console.log('add indexedDB error ...'))
           })
         })
         .then(() => gettingPics())
@@ -78,7 +78,7 @@ export const Home = () => {
       .then(() => {
         setPics(pics.filter(item => item.id !== id))
       })
-      .catch(() => console.log('error ...'))
+      .catch(() => console.log('deleteById indexedDB error ...'))
   }
 
   /** clear indexedDB on first load **/
@@ -95,7 +95,7 @@ export const Home = () => {
         </Text>
       </Description>
 
-      <UploadInput
+      <NavigationMenu
         uploadImageHandler={uploadImageHandler}
         clearPreview={clearPreview}
       />

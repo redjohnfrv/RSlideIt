@@ -22,6 +22,7 @@ export const Container = ({children}: Props) => {
 
 const Wrapper = styled.div<{theme: IThemes}>`
   max-width: 1900px;
+  min-width: 1024px;
   min-height: 100vh;
   margin: 0 auto;
   padding: 24px;
