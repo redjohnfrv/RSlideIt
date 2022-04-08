@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useCallback, useContext, useState} from 'react'
 import styled from 'styled-components'
 
 //** utils
@@ -9,14 +9,16 @@ import {IPicture, IThemes} from '../../assets/interfaces'
 import {Popup} from '../Popup'
 import {Loader} from '../Loader'
 import {NoImages} from './NoImages'
+import {SvgClose} from '../icons'
 
 
 interface Props {
   images: IPicture[]
   loading: boolean
+  deletePicById: (id: string) => void
 }
 
-export const Preloader = ({images, loading}: Props) => {
+export const Preloader = ({images, loading, deletePicById}: Props) => {
 
   const theme = useContext(ThemeContext)
 
@@ -33,6 +35,12 @@ export const Preloader = ({images, loading}: Props) => {
     }
   }
 
+  /** delete pictures **/
+  const deleteHandler = useCallback((event: any, id: string) => {
+    event.stopPropagation()
+    deletePicById(id)
+  }, [deletePicById])
+
   if (loading) return (
     <LoaderWrapper>
       <Loader />
@@ -45,6 +53,12 @@ export const Preloader = ({images, loading}: Props) => {
           return (
             <ImagePreview key={image.id} onClick={() => clickImageHandler(image)}>
               <img src={image.pic} alt={image.pic} />
+              <DeleteImage
+                onClick={(event) => deleteHandler(event, image.id)}
+                theme={theme.theme}
+              >
+                <SvgClose />
+              </DeleteImage>
             </ImagePreview>
           )
         })}
@@ -67,8 +81,8 @@ const Wrapper = styled.div<{theme: IThemes}>`
   background: ${theme => theme.theme.blockBg};
   border-radius: 4px;
 `
-
 const ImagePreview = styled.div`
+  position: relative;
   height: 300px;
   overflow: hidden;
   
@@ -79,11 +93,32 @@ const ImagePreview = styled.div`
     border-radius: 4px;
   }
 `
-
 const LoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 50vh;
+`
+const DeleteImage = styled.div<{theme: IThemes}>`
+  box-sizing: border-box;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 50px;
+  height: 50px;
+  padding: 12.5px;
+  border-radius: 50%;
+  background: ${theme => theme.theme.background};
+  transition: all .2s ease;
+
+  &:hover {
+    transform: translate(-2px, 2px);
+  }
+
+  & svg {
+    width: 100%;
+    height: auto;
+    fill: ${theme => theme.theme.text};
+  }
 `

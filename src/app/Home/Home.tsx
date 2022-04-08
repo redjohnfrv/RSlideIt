@@ -23,7 +23,7 @@ export const Home = () => {
   const [pics, setPics] = useState<IPicture[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const {add, getAll, deleteAll} = useIndexedDBStore(DBName)
+  const {add, getAll, deleteAll, deleteByID} = useIndexedDBStore(DBName)
   const pictures: IPicture[] = []
 
   /** get pictures from indexedDB **/
@@ -64,11 +64,21 @@ export const Home = () => {
     }
   }
 
+  /** delete all records from DB **/
   const clearPreview = () => {
     setIsLoading(true)
     deleteAll()
       .then(() => setPics([]))
       .then(() => setIsLoading(false))
+  }
+
+  /** delete record by ID from DB **/
+  const deletePicById = (id: string) => {
+    deleteByID(id)
+      .then(() => {
+        setPics(pics.filter(item => item.id !== id))
+      })
+      .catch(() => console.log('error ...'))
   }
 
   /** clear indexedDB on first load **/
@@ -90,7 +100,11 @@ export const Home = () => {
         clearPreview={clearPreview}
       />
 
-      <Preloader images={pics} loading={isLoading} />
+      <Preloader
+        images={pics}
+        loading={isLoading}
+        deletePicById={deletePicById}
+      />
     </Wrapper>
   )
 }
