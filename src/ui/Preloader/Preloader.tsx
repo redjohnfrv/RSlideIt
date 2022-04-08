@@ -112,7 +112,7 @@ const DeleteImage = styled.div<{theme: IThemes}>`
   padding: 12.5px;
   border-radius: 50%;
   background: ${theme => theme.theme.background};
-  transition: all .2s ease;
+  transition: transform .2s ease;
 
   &:hover {
     transform: translate(-2px, 2px);

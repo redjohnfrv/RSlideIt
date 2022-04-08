@@ -36,10 +36,6 @@ export const Home = () => {
       .then(() => setIsLoading(false))
   }, [getAll])
 
-  useEffect(() => {
-    titleContext.titleHandler(pageTitle)
-  }, [titleContext, pageTitle])
-
   const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true)
     const loadedFiles = e.target.files
@@ -81,10 +77,15 @@ export const Home = () => {
       .catch(() => console.log('deleteById indexedDB error ...'))
   }
 
-  /** clear indexedDB on first load **/
+  /** get pics from indexedDB on render **/
   useEffect(() => {
-    clearPreview()
+    gettingPics()
   }, [])
+
+  /** set page title **/
+  useEffect(() => {
+    titleContext.titleHandler(pageTitle)
+  }, [titleContext, pageTitle])
 
   return (
     <Wrapper>

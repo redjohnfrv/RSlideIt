@@ -9,6 +9,7 @@ export const colors = {
 
 export const pageTitles = {
   home: 'WATCH ME!',
+  watcher: 'PLAY ME!'
 }
 
 export const themeNames = {
