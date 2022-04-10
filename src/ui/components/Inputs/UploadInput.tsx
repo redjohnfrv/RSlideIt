@@ -40,6 +40,7 @@ const Wrapper = styled.div<{theme: IThemes}>`
   }
   
   & label {
+    font-family: 'IndieFlower', sans-serif;
     position: absolute;
     top: 0;
     left: 0;

@@ -41,14 +41,14 @@ function App() {
     <IndexedDBProvider config={idbConfig}>
       <ThemeProvider value={{theme: themeIsLight ? themes.light : themes.dark, themeHandler}}>
         <TitleProvider value={{title: titlePage, titleHandler}}>
-          <MainLayout title={titlePage}>
-            <BrowserRouter>
-              <Routes>
-                <Route path={routes.ROOT} element={<Home />} />
-                <Route path={routes.WATCHER} element={<Watcher />} />
-              </Routes>
-            </BrowserRouter>
-          </MainLayout>
+          <BrowserRouter>
+            <MainLayout title={titlePage}>
+                <Routes>
+                  <Route path={routes.ROOT} element={<Home />} />
+                  <Route path={routes.WATCHER} element={<Watcher />} />
+                </Routes>
+            </MainLayout>
+          </BrowserRouter>
         </TitleProvider>
       </ThemeProvider>
     </IndexedDBProvider>

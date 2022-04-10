@@ -1,15 +1,15 @@
-import React, {ChangeEvent, useContext, useEffect, useState} from 'react'
+import React, {ChangeEvent, useContext} from 'react'
 import styled from 'styled-components'
 
 //** utils
 import {ThemeContext} from '../../App'
 import {IThemes} from '../../assets/interfaces'
+import {routes} from '../../assets/constants'
 
 //** components
 import {SvgBroom, SvgWatch} from '../icons'
 import {UploadInput} from '../components/Inputs'
 import {NavLink} from 'react-router-dom'
-import {routes} from '../../assets/constants'
 
 interface Props {
   uploadImageHandler: (e: ChangeEvent<HTMLInputElement>) => void
@@ -61,10 +61,10 @@ const ClearPreview = styled.div<{theme: IThemes, watchDisable: boolean}>`
     width: 100%;
     height: auto;
     fill: ${theme => theme.theme.buttons};
-    
-    &:hover {
-      opacity: 1;
-    }
+  }
+
+  &:hover {
+    opacity: 1;
   }
 `
 const WatcherLink = styled.div<{theme: IThemes, watchDisable: boolean}>`

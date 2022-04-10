@@ -25,6 +25,6 @@ const Wrapper = styled.div<{theme: IThemes}>`
   
   & h1 {
     font-size: 36px;
-    color: ${theme => theme.theme.text}
+    color: ${theme => theme.theme.buttons}
   }
 `
