@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useContext} from 'react'
+import React, {ChangeEvent, useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 
 //** utils
@@ -14,21 +14,25 @@ import {routes} from '../../assets/constants'
 interface Props {
   uploadImageHandler: (e: ChangeEvent<HTMLInputElement>) => void
   clearPreview: () => void
+  watchDisable: boolean
 }
 
-export const NavigationMenu = ({uploadImageHandler, clearPreview}: Props) => {
-
+export const NavigationMenu = ({uploadImageHandler, clearPreview, watchDisable}: Props) => {
   const theme = useContext(ThemeContext)
 
   return (
     <Wrapper>
       <UploadInput uploadImageHandler={uploadImageHandler} />
 
-      <ClearPreview theme={theme.theme} onClick={clearPreview}>
+      <ClearPreview
+        theme={theme.theme}
+        onClick={clearPreview}
+        watchDisable={watchDisable}
+      >
         <SvgBroom />
       </ClearPreview>
 
-      <WatcherLink theme={theme.theme}>
+      <WatcherLink theme={theme.theme} watchDisable={watchDisable}>
         <NavLink to={routes.WATCHER}>
           <SvgWatch />
         </NavLink>
@@ -42,26 +46,36 @@ const Wrapper = styled.nav`
   align-items: center;
   gap: 24px;
 `
-const ClearPreview = styled.div<{theme: IThemes}>`
+const ClearPreview = styled.div<{theme: IThemes, watchDisable: boolean}>`
   width: 36px;
   height: 36px;
   cursor: pointer;
+  opacity: .8;
+  pointer-events: unset;
+
+  ${watchDisable => watchDisable.watchDisable &&
+    {opacity: .3, pointerEvents: 'none'}
+  }
   
   & svg {
     width: 100%;
     height: auto;
     fill: ${theme => theme.theme.buttons};
-    opacity: .8;
     
     &:hover {
       opacity: 1;
     }
   }
 `
-const WatcherLink = styled.div<{theme: IThemes}>`
+const WatcherLink = styled.div<{theme: IThemes, watchDisable: boolean}>`
   width: 36px;
   height: 36px;
   opacity: .8;
+  pointer-events: unset;
+
+  ${watchDisable => watchDisable.watchDisable &&
+    {opacity: .3, pointerEvents: 'none'}
+  }
   
   &:hover {
     opacity: 1;

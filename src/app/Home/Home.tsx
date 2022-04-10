@@ -99,6 +99,7 @@ export const Home = () => {
       <NavigationMenu
         uploadImageHandler={uploadImageHandler}
         clearPreview={clearPreview}
+        watchDisable={!pics.length}
       />
 
       <Preloader
