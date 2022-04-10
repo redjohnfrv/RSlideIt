@@ -14,6 +14,9 @@ import {IPicture, IThemes} from '../../assets/interfaces'
 import {Swiper as SwiperComponent, SwiperSlide} from 'swiper/react'
 import {PlayPanel} from '../WatcherPanel'
 
+/** slide swipe speed ms **/
+export const defaultPlayingSpeed = 8000
+export const fasterPlayingSpeed = 3000
 
 interface Props {
   pics: IPicture[]
@@ -22,9 +25,11 @@ interface Props {
 export const SwiperContainer = ({pics}: Props) => {
 
   const theme = useContext(ThemeContext)
-
-  const [isPlaying, setIsPlaying] = useState(false)
   const playRef = useRef(null)
+
+  const [playingSpeed, setPlayingSpeed] = useState<number>(defaultPlayingSpeed)
+  const [isPlaying, setIsPlaying] = useState(false)
+
 
   const playHandler = useCallback(() => {
     isPlaying
@@ -35,9 +40,27 @@ export const SwiperContainer = ({pics}: Props) => {
     setIsPlaying(prev => !prev)
   }, [isPlaying])
 
+  const speedHandler = () => {
+    playingSpeed === defaultPlayingSpeed
+      ? setPlayingSpeed(fasterPlayingSpeed)
+      : setPlayingSpeed(defaultPlayingSpeed)
+  }
+
+  const returnToStart = () => {
+    //@ts-ignore
+    playRef.current.swiper.slideTo(0)
+    setIsPlaying(false)
+  }
+
   return (
     <Wrapper theme={theme.theme}>
-      <PlayPanel playHandler={playHandler} />
+      <PlayPanel
+        playHandler={playHandler}
+        isPlaying={isPlaying}
+        speedHandler={speedHandler}
+        playingSpeed={playingSpeed}
+        returnToStart={returnToStart}
+      />
       <SwiperComponent
         //@ts-ignore
         ref={playRef}
@@ -45,7 +68,7 @@ export const SwiperContainer = ({pics}: Props) => {
         spaceBetween={30}
         loop={true}
         autoplay={isPlaying ? {
-          delay: 1500,
+          delay: playingSpeed,
         } : false}
         modules={[Autoplay]}
         className="mySwiper"

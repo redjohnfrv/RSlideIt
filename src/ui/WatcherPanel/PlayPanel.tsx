@@ -3,30 +3,41 @@ import styled from 'styled-components'
 
 //** utils
 import {ThemeContext} from '../../App'
+import {fasterPlayingSpeed} from '../SwiperContainer/SwiperContainer'
 
 //** components
 import {SvgFaster, SvgPause, SvgPlay, SvgRefresh} from '../icons'
 
 interface Props {
   playHandler: () => void
+  speedHandler: () => void
+  returnToStart: () => void
+  isPlaying: boolean
+  playingSpeed: number
 }
 
-export const PlayPanel = ({playHandler}: Props) => {
-
+export const PlayPanel = (
+  {
+    playHandler,
+    isPlaying,
+    speedHandler,
+    playingSpeed,
+    returnToStart
+  }: Props) => {
   const theme = useContext(ThemeContext)
 
   return (
     <Wrapper theme={theme.theme}>
-      <SvgWrapper onClick={playHandler}>
+      <SvgWrapper onClick={playHandler} disable={isPlaying}>
         <SvgPlay />
       </SvgWrapper>
-      <SvgWrapper onClick={playHandler}>
+      <SvgWrapper onClick={playHandler} disable={!isPlaying}>
         <SvgPause />
       </SvgWrapper>
-      <SvgWrapper>
+      <SvgWrapper onClick={speedHandler} bold={playingSpeed === fasterPlayingSpeed}>
         <SvgFaster />
       </SvgWrapper>
-      <SvgWrapper>
+      <SvgWrapper onClick={returnToStart}>
         <SvgRefresh />
       </SvgWrapper>
     </Wrapper>
@@ -57,12 +68,22 @@ const Wrapper = styled.nav`
     fill: ${theme => theme.theme.buttonsText};
   }
 `
-const SvgWrapper = styled.div`
+const SvgWrapper = styled.div<{disable?: boolean, bold?: boolean}>`
   width: 36px;
   height: 36px;
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
+  opacity: 1;
+  pointer-events: unset;
+
+  ${disable => disable.disable &&
+    {opacity: .4, pointerEvents: 'none'}
+  }
+  
+  & svg {
+    stroke: ${bold => bold.bold ? 'white' : 'none'};
+  }
   
   &:hover {
     border: 1px solid white;
