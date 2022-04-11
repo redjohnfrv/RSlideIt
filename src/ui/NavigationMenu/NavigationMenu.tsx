@@ -45,6 +45,11 @@ const Wrapper = styled.nav`
   display: flex;
   align-items: center;
   gap: 24px;
+  
+  @media screen and (orientation: portrait) and (max-width: 1024px) {
+    justify-content: space-between;
+    gap: 0;
+  }
 `
 const ClearPreview = styled.div<{theme: IThemes, watchDisable: boolean}>`
   width: 36px;

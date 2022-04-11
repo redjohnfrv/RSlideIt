@@ -27,4 +27,8 @@ const Wrapper = styled.div<{theme: IThemes}>`
   margin: 0 auto;
   padding: 24px;
   background: ${theme => theme.theme.background};
+  
+  @media screen and (max-width: 1024px) {
+    min-width: 100%;
+  }
 `

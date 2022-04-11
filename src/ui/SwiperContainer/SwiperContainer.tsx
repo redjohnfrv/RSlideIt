@@ -94,6 +94,11 @@ const Wrapper = styled.div<{theme: IThemes}>`
   height: 100vh;
   margin-bottom: 48px;
   
+  @media screen and (orientation: portrait) and (max-width: 1024px) {
+    height: 70vh;
+    gap: 0;
+  }
+  
   & .swiper-slide {
     background: ${theme => theme.theme.background} !important;
   }
@@ -109,5 +114,10 @@ const SlideContainer = styled.div`
     width: auto;
     height: 100%;
     object-fit: contain;
+
+    @media screen and (orientation: portrait) and (max-width: 1024px) {
+      width: 100%;
+      object-fit: scale-down;
+    }
   }
 `

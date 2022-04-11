@@ -32,6 +32,10 @@ const Wrapper = styled.div<{theme: IThemes}>`
   position: relative;
   width: max-content;
   height: 36px;
+
+  @media screen and (max-width: 1024px) {
+    width: 50%;
+  }
   
   & input[type='file'] {
     color: transparent;

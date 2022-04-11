@@ -82,11 +82,25 @@ const Wrapper = styled.div<{theme: IThemes}>`
   margin-top: 24px;
   background: ${theme => theme.theme.blockBg};
   border-radius: 4px;
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0;
+  }
 `
 const ImagePreview = styled.div`
   position: relative;
   height: 300px;
   overflow: hidden;
+  
+  @media screen and (max-width: 1024px) {
+    height: 50vh;
+  }
+  
+  @media screen and (orientation: landscape) and (max-width: 1024px) {
+    height: 80vh;
+  }
   
   & img {
     width: 100%;
